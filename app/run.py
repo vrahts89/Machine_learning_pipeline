@@ -32,7 +32,7 @@ engine = create_engine('sqlite:///'+'Machine_learning_pipeline/data/disaster_res
 df = pd.read_sql_table('disaster_response', engine)
 
 # load model
-model = joblib.load("Machine_learning_pipeline/models/disaster_response.pkl")
+model = joblib.load("Machine_learning_pipeline/models/classifier.pkl")
 
 df["tokens"] = df["message"].apply(tokenize)
 df["token_count"] = df['tokens'].apply(lambda x: len(x))
@@ -53,6 +53,9 @@ def index():
     #Extracting the data for the second visualization 
     #visualize the most characteristic tokens for the "child_alone" category using TF-IDF scores
     
+    #choose a category
+    category = 'tools'
+    
     # Initialize a TF-IDF Vectorizer
     vectorizer = TfidfVectorizer()
 
@@ -63,17 +66,17 @@ def index():
     tfidf_df = pd.DataFrame(tfidf_matrix.toarray(), columns=vectorizer.get_feature_names_out())
 
     # Add the category data back to the DataFrame
-    tfidf_df['tools'] = df['tools']
+    tfidf_df[category] = df[category]
 
     # Group by category and calculate the mean TF-IDF score for each token
-    grouped = tfidf_df.groupby('tools').mean()
+    grouped = tfidf_df.groupby(category).mean()
 
     # Reset index to turn categories into a column
     grouped = grouped.reset_index()
 
     # Melt the DataFrame
-    plot_data = grouped.melt(id_vars='tools', var_name='token', value_name='tfidf_score')
-    
+    plot_data = grouped.melt(id_vars=category, var_name='token', value_name='tfidf_score')
+    print(plot_data)
     
     #create two graphs to visualize the data
     graphs = [
