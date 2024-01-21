@@ -1,6 +1,16 @@
 # Disaster Response Machine Learning Pipeline
 
-Project Overview<a name="project-overview"></a>
+### Table of Contents
+
+1. [Project Overview](#project-overview)
+2. [File Description](#file-descriptions)
+3. [Instructions](#instructions)
+4. [ETL Pipeline](#etl-pipeline)
+5. [ML Pipeline](#ml-pipeline)
+6. [Flask Web App](#flask-web-app)
+7. [Author and Acknowledgements](#authors-and-acknowledgements)
+
+## Project Overview<a name="project-overview"></a>
 
 In this project, we have built a machine learning pipeline to categorize emergency messages based on the needs communicated by the sender. The project includes a web app where an emergency worker can input a new message and get classification results in several categories. The web app will also display visualizations of the data.
 
@@ -10,7 +20,7 @@ ETL Pipeline: An Extract, Transform, and Load process that cleans data and store
 Machine Learning Pipeline: A machine learning pipeline that trains a model to classify text message into categories.
 Flask Web App: A web application that visualizes the results of the models and allows input of new messages for classification.
 
-File Descriptions<a name="file-descriptions"></a>
+## File Descriptions<a name="file-descriptions"></a>
 
 - app
   | - template
@@ -30,26 +40,26 @@ File Descriptions<a name="file-descriptions"></a>
 - README.md
 - process_data.py # script for ETL pipeline
 
-Instructions<a name="instructions"></a>
+## Instructions<a name="instructions"></a>
 
-Running the Web App from the Project Workspace IDE:
+### Running the Web App from the Project Workspace IDE:
 
 Open a new terminal window. You should already be in the workspace folder, but if not, then use terminal commands to navigate inside the folder with the run.py file.
 
 Type in the command line:
 python run.py
 
-Running the ETL pipeline:
+### Running the ETL pipeline:
 
 To run the ETL pipeline that cleans and stores the data in a database, navigate to the main folder and run the following command:
 python process_data.py disaster_messages.csv disaster_categories.csv disaster_response.db
 
-Running the ML pipeline:
+### Running the ML pipeline:
 
 To run the ML pipeline that trains the classifier and saves the model, navigate to the models folder and run the following command:
 python train_classifier.py ../data/DisasterResponse.db classifier.pkl
 
-ETL Pipeline<a name="etl-pipeline"></a>
+## ETL Pipeline<a name="etl-pipeline"></a>
 
 The ETL pipeline is implemented in the process_data.py file. It performs the following steps:
 
@@ -58,7 +68,7 @@ Merges the two datasets.
 Cleans the data.
 Stores it in a SQLite database.
 
-ML Pipeline<a name="ml-pipeline"></a>
+## ML Pipeline<a name="ml-pipeline"></a>
 
 The Machine Learning pipeline is implemented in the train_classifier.py file. It performs the following steps:
 
@@ -69,7 +79,7 @@ Trains and tunes a model using GridSearchCV.
 Outputs results on the test set.
 Exports the final model as a pickle file.
 
-Flask Web App<a name="flask-web-app"></a>
+## Flask Web App<a name="flask-web-app"></a>
 
 The Flask web app provides an interface for an emergency worker to input a new message and get classification results in several categories. It also displays visualizations of the dataset.
 
@@ -78,7 +88,7 @@ The Flask web app provides an interface for an emergency worker to input a new m
 
 The web app is modular and allows for easy integration of the machine learning model and the dataset.
 
-Authors and Acknowledgements<a name="licensing-authors-and-acknowledgements"></a>
+## Authors and Acknowledgements<a name="authors-and-acknowledgements"></a>
 
 Please acknowledge Figure Eight for providing the relevant dataset for this project.
 Author: Valentin Rahts
