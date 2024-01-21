@@ -51,7 +51,7 @@ python run.py
 
 ### Running the ETL pipeline:
 
-To run the ETL pipeline that cleans and stores the data in a database, navigate to the main folder and run the following command:
+To run the ETL pipeline that cleans and stores the data in a database, navigate to the data folder and run the following command:
 python process_data.py disaster_messages.csv disaster_categories.csv disaster_response.db
 
 ### Running the ML pipeline:
