@@ -23,6 +23,18 @@ from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier,
 nltk.download(['stopwords', 'wordnet', 'punkt'])
 
 def load_data(database_filepath):
+    '''
+    load_data
+    loads the data from the database and separates the dataframe into X and Y values
+    
+    Input:
+    database_filepath  filepath to the sqlite database
+    
+    Returns:
+    X   dataframe with the input variables for the ML pipeline
+    Y   dataframe with the output variables for the ML pipeline
+    Y.columns   Pandas series with the columns of the output variables
+    '''
     # load data from database
     engine = create_engine('sqlite:///'+database_filepath)
     df = pd.read_sql("SELECT * FROM disaster_response", engine)
@@ -31,6 +43,16 @@ def load_data(database_filepath):
     return X, Y, Y.columns
 
 def tokenize(text):
+    '''
+    tokenize
+    creates a list of tokens from a text input and lemmatizes them
+    
+    Input:
+    text  string text input
+    
+    Returns:
+    tokens  a list of tokens from the text
+    '''
     # normalize case and remove punctuation
     text = re.sub(r"[^a-zA-Z0-9]", " ", text.lower())
     
@@ -43,9 +65,6 @@ def tokenize(text):
     #remove stopwords
     tokens = [w for w in tokens if w not in stopwords.words("english")]
     
-    # Reduce words to their stems
-    tokens = [PorterStemmer().stem(w) for w in tokens]
-    
     # lemmatize words to their root form
     tokens = [lemmatizer.lemmatize(word) for word in tokens]
 
@@ -53,6 +72,13 @@ def tokenize(text):
 
 
 def build_model():
+    '''
+    build model
+    creates a machine learning model with gridSearch
+    
+    Returns:
+    cv   GridSearch ML model
+    '''
     #create a machine learning pipeline
     pipeline = Pipeline([
             ('vect', CountVectorizer(tokenizer=tokenize)),
@@ -76,6 +102,16 @@ def build_model():
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
+    '''
+    evaluate_model
+    evaluates the ML model by print classifications reports for every column
+    
+    Input:
+    model   GridSearch ML Model
+    X_test  test input variables
+    Y_test  test output variables
+    category_names  list of categories
+    '''
     # Print best model
     print("Best parameters:", model.best_params_)
     print("Best score:", model.best_score_)
@@ -85,11 +121,19 @@ def evaluate_model(model, X_test, Y_test, category_names):
 
     # Test model for every column
     for i in range(len(Y_test.columns)):
-        #print(f"Classification Report for {Y_test.columns[i]}:")
+        print(f"Classification Report for {Y_test.columns[i]}:")
         print(classification_report(Y_test.iloc[:, i], y_pred[:, i]))
 
 
 def save_model(model, model_filepath):
+    '''
+    save_model
+    saves the model with the best performing parameters in a pickle file
+    
+    Input:
+    model   GridSearch ML model
+    model_filepath  filepath where the pickle file should be saved
+    '''
     # Export model as a pickle file
 
     # Save best model as a variable
